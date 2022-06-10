@@ -6,7 +6,4 @@ this an twitter clone that was build with it's own data base
 
 npm run dev
 
-# or
-npm run build
-```
 
