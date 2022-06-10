@@ -21,7 +21,6 @@ export default async function handler(
                     _type: "comment",
                     comment: comment.comment,
                     username: comment.username,
-                    blockTweet: false,
                     profileImg: comment.profileImg,
                     tweet: {
                         _type: 'reference',
