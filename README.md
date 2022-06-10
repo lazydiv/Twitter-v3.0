@@ -4,6 +4,6 @@ this an twitter clone that was build with it's own data base
 
 ## How to Execute
 
-```npm run dev1```
+```npm run dev```
 
 
