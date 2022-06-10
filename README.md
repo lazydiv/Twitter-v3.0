@@ -4,10 +4,9 @@ this an twitter clone that was build with it's own data base
 
 ## How to Execute
 
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
+npm run dev
+
 # or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-# or
-pnpm create next-app --example with-tailwindcss with-tailwindcss-app
+npm run build
 ```
 

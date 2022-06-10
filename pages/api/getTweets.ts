@@ -8,7 +8,7 @@ const feedQuery = groq`
     *[_type == "tweet" && !blockTweet]{
         _id,
         ...
-    } | order(_cratedAT desc)
+    } | order(_createdAt desc)
 `
 
 type Data = {
