@@ -5,6 +5,7 @@ import FacebookProvider from "next-auth/providers/facebook"
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
+    
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID,
       clientSecret: process.env.TWITTER_CLIENT_SECRET,

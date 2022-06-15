@@ -15,17 +15,19 @@ interface Props {
 
 const Home = ({ tweets }: Props) => {
   return (
-    <div className="lg:max-w-6xl max-h-screen overflow-hidden mx-auto">
-      <Head>
-        <title>Twitter 3.0</title>
-      </Head>
-      <Toaster />
-      <main className='grid grid-cols-9'>
-        <SideBar />
-        <Feed tweets={tweets}/>
-        <Widgets />
-      </main>
-    </div>
+    <>
+      <div className="lg:max-w-6xl max-h-screen overflow-hidden mx-auto">
+        <Head>
+          <title>Twitter 3.0</title>
+        </Head>
+        <Toaster />
+        <main className='grid grid-cols-9'>
+          <SideBar />
+          <Feed tweets={tweets}/>
+          <Widgets />
+        </main>
+      </div>
+    </>
   )
 }
 

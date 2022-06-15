@@ -19,13 +19,14 @@ function Feed({ tweets: tweetsProp }: Props) {
     const refreshToast = toast.loading('Refreshing Feed...')
     const tweets = await fetchTweets()
     setTweets(tweets)
+    console.log(tweets)
     toast.success('Feed refreshed!', {
       id: refreshToast,
     })
   }
 
   return (
-    <div className='col-span-7 overflow-scroll max-h-screen scrollbar-hide lg:col-span-5 border-x'>
+    <div className='col-span-7 overflow-scroll dark:text-green-500 max-h-screen scrollbar-hide lg:col-span-5 border-x'>
         <div className='flex items-center justify-between '>
             <h1 className='p-5 pb-0 text-xl font-bold'>Home</h1>
             <RefreshIcon onClick={handelRefresh} className='h-8 w-8  cursor-pointer text-twitter mr-5 mt-5 transition-all duration-500 ease-out hover:rotate-180 active:scale-125'/>

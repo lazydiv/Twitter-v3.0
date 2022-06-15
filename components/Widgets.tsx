@@ -1,6 +1,6 @@
 import { SearchIcon } from '@heroicons/react/outline'
 import React from 'react'
-import {TwitterTimelineEmbed} from 'react-twitter-embed'
+import { TwitterTimelineEmbed } from 'react-twitter-embed'
 function Widgets() {
   return (
     <div className='px-2 col-span-2 mt-2 hidden lg:inline '>
@@ -12,7 +12,7 @@ function Widgets() {
         <TwitterTimelineEmbed
         sourceType="profile"
         screenName="elonmusk"
-
+      
         options={{height: 1000}}
         />
         </div>

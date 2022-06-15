@@ -1,18 +1,18 @@
-import { Comment } from './../../typing.d';
+import { Like } from './../../typing.d';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { groq } from 'next-sanity'
 import {sanityClient} from '../../sanity'
 
 
 
-const commentQuery = groq`
-  *[_type == "comment" && references(*[_type == "tweet" && _id == $tweetId]._id)]{
+const likeQuery = groq`
+  *[_type == "like" && references(*[_type == "tweet" && _id == $tweetId]._id)]{
     _id,
     ...
   } | order(_createdAT desc)
 `
 
-type Data = Comment[]
+type Data = Like[]
 
 
 export default async function handler(
@@ -20,6 +20,6 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
     const {tweetId} = req.query
-    const comments: Comment[] = await sanityClient.fetch(commentQuery, {tweetId})
-  res.status(200).json(comments)
+    const likes: Like[] = await sanityClient.fetch(likeQuery, {tweetId})
+  res.status(200).json(likes)
 }

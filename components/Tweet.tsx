@@ -1,5 +1,6 @@
-import { Comment, CommentBody, Tweet } from '../typing'
+import { Comment, CommentBody, Like, Tweet, LikeBody } from '../typing'
 import TimeAgo from 'react-timeago'
+import { HeartIcon as SolidHeartIcon }  from '@heroicons/react/solid'
 import{
     ChatAlt2Icon,
     HeartIcon,
@@ -8,6 +9,7 @@ import{
   } from '@heroicons/react/outline'
 import React, { useEffect, useRef, useState } from 'react'
 import { fetchComments } from '../utils/fetchComments'
+import { fetchLikes } from '../utils/fetchLikes'
 import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 
@@ -21,18 +23,22 @@ interface Props {
 
 function TweetComponent({ tweet }: Props) {
     const [comments , setComments] = useState<Comment[]>([])
+    const [likes, setLikes] = useState<Like[]>([])
     const { data: session } = useSession()
     const [isCommentBoxOpen, setIsCommentBoxOpen] = useState<boolean>(false)
     const [comment, setComment] = useState<string>('')
     const commentTextInput = useRef<HTMLInputElement>(null)
+    const [isLiked, setIsLiked] = useState<boolean>(false)
+    
     const reloadComments = async () => {
         const comments: Comment[] = await fetchComments(tweet._id)
         setComments(comments)
     }
     useEffect(() => {
         reloadComments()
-    }, [])
-    
+    }, [tweet])
+
+
     const hanleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const commentTOSent: CommentBody = {
@@ -50,6 +56,48 @@ function TweetComponent({ tweet }: Props) {
         setIsCommentBoxOpen(false)
         toast('Comment Posted!', {
             icon: "🚀",
+        })
+    }
+    const reloadLike = async () => {
+        const likes: Like[] = await fetchLikes(tweet._id)
+        setLikes(likes)
+    }
+    useEffect(() => {
+        reloadLike()
+    }
+    , [tweet])
+
+    const handleLike = async () => {
+        const likeTOSent: LikeBody = {
+            username: session?.user?.name || 'Unknown',
+            profileImg: session?.user?.image || 'https://links.papareact.com/gll',
+            tweetId: tweet._id,
+        }
+        const res = await fetch(`/api/UploadLike`, {
+            body: JSON.stringify(likeTOSent),
+            method: 'POST',
+        })
+        reloadLike()
+        setIsLiked(!isLiked)
+        toast('Liked!', {
+            icon: "❤",
+        })
+    }
+    const handleDislike = async () => {
+        const dislikeToSent: LikeBody = {
+            username: session?.user?.name || 'Unknown',
+            profileImg: session?.user?.image || 'https://links.papareact.com/gll',
+            tweetId: tweet._id,
+        }
+
+        const res = await fetch(`/api/DeleteLike`, {
+            body: JSON.stringify(dislikeToSent),
+            method: 'POST',
+        })
+        reloadLike()
+        setIsLiked(!isLiked)
+        toast('Disliked!', {
+            icon: "💔",
         })
     }
     
@@ -73,12 +121,13 @@ function TweetComponent({ tweet }: Props) {
             </div>
         </div>
         <div className='flex justify-between  space-x-3 mt-4'>
-            <div onClick={() => session && setIsCommentBoxOpen(!isCommentBoxOpen)} className='flex cursor-pointer items-center space-x-2 text-gray-400'>
+            <div onClick={() => session ? setIsCommentBoxOpen(!isCommentBoxOpen) : toast('Sign In!😍')} className='flex cursor-pointer items-center space-x-2 text-gray-400'>
                 <ChatAlt2Icon className='h-5 w-5 text-gray-500' />
                 <p className=''>{comments.length}</p>
             </div>
-            <div>
-                <HeartIcon className='h-5 w-5 text-gray-500' />
+            <div onClick={!isLiked ? handleLike : handleDislike} className='flex space-x-2 cursor-pointer items-center'>
+                {!isLiked ? <HeartIcon className='h-5 w-5 text-gray-500' /> : <SolidHeartIcon className='h-5 w-5 text-red-500' />}
+                <p className='text-sm text-gray-500'>{likes.length}</p>
             </div>
             <div>
                 <SwitchHorizontalIcon className='h-5 w-5 text-gray-500' />

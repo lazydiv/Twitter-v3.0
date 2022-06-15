@@ -2,7 +2,7 @@ import { SVGProps } from 'react'
 
 interface SideBarIconsProps {
     Icon: (props: SVGProps<SVGSVGElement>) => JSX.Element
-    title: string
+    title?: string
     onClick?: () => {}
 }
 
