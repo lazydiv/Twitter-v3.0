@@ -61,8 +61,8 @@ function SideBar() {
   }, [status])
   
   return (
-    <div className='flex col-span-2 flex-col items-center px-4 md:items-start'>
-        <img src="https://links.papareact.com/drq" className='m-3 h-10 w-10' alt=""/>
+    <div className='flex col-span-1 md:col-span-2 flex-col items-center  '>
+        <img src="https://links.papareact.com/drq" className='m-3 mt-5 md:m-3 md:mt-3 h-7 md:h-10 md:w-10' alt=""/>
         
         <SideBarItems Icon={HomeIcon} title="Home"/>
         <SideBarItems Icon={HashtagIcon} title="Explore"/>
