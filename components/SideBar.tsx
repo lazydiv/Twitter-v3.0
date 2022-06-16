@@ -16,11 +16,22 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { User, UserBody } from '../typing'
 import { fetchUser } from '../utils/fetchuser'
 
-function SideBar(window: Window) {
+function SideBar() {
   const { data: session, status } = useSession()
   const [ theme , setTheme ] =  useState<string>('light')
   const [ user , setUser ] = useState<User>({} as User)
   const [ isSignIn , setIsSignIn ] = useState<boolean>(false)
+  const [isNotDesktop, setNotDesktop] = useState<boolean>(globalThis.innerWidth <= 768);
+
+  const updateMedia = () => {
+    setNotDesktop(() => globalThis.innerWidth <= 768);
+  };
+  console.log(isNotDesktop)
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => globalThis.removeEventListener("resize", updateMedia);
+  });
+
   useEffect(() => {
     localStorage.setItem('theme', theme)
     const localTheme = localStorage.getItem('theme')
@@ -59,18 +70,18 @@ function SideBar(window: Window) {
       setIsSignIn(true)
     }
   }, [status])
-  
+
   return (
     <div className='flex  md:col-span-2 md:justify-start md:w-fit md:bg-transparent md:relative md:items-start md:flex-col fixed bottom-0 z-50 w-full  items-center justify-evenly  bg-white border-t'>
 
         <img src="https://links.papareact.com/drq" className='md:m-3 md:mt-3  md:h-10 md:w-10 md:block hidden' alt=""/>
         
         <SideBarItems Icon={HomeIcon} title="Home"/>
-        {window.innerWidth > 768 && <SideBarItems Icon={HashtagIcon} title="Explore"/>}
+        {isNotDesktop == false ? <SideBarItems Icon={HashtagIcon} title="Explore"/> : null}
         <SideBarItems Icon={BellIcon} title="Notifications"/>
         <SideBarItems Icon={MailIcon} title="Messages"/>
-        {window.innerWidth > 768 && <SideBarItems Icon={CollectionIcon} title="Lists" />}
-        {window.innerWidth > 768 && <SideBarItems Icon={BookmarkIcon} title="Bookmarks" />}
+        {isNotDesktop == false ? <SideBarItems Icon={CollectionIcon} title="Lists" /> : null}
+        {isNotDesktop == false  ? <SideBarItems Icon={BookmarkIcon} title="Bookmarks" /> : null}
         <SideBarItems onClick={session ? signOut : handleSignin} Icon={UserIcon} title={session ? 'Sign Out' : 'Sign In'}/>
         <button onClick={handleThemeChange}>
             {
