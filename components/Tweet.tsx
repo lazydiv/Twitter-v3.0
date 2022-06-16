@@ -102,7 +102,7 @@ function TweetComponent({ tweet }: Props) {
     }
     
   return (
-    <div className='flex flex-col space-x-3 border-y p-5 border-gray-100'>
+    <div className='flex flex-col space-x-3 border-y p-5 '>
         <div className='flex space-x-3'>
             <img className='h-10 w-10 rounded-full object-cover' src={tweet.profileImg} alt="" />
             <div>
@@ -137,7 +137,7 @@ function TweetComponent({ tweet }: Props) {
             </div>
         </div>
             {comments?.length > 0 && (
-                <div className='my-2 mt-5  max-h-44 overflow-y-scroll scrollbar-hide  border-t border-gray-100'>
+                <div className='my-2 mt-5  max-h-44 overflow-y-scroll scrollbar-hide  border-t'>
                     {comments.map(comment => (
                         <div key={comment._id} className='relative flex mt-5 space-x-2'>
                             <hr className='border-x absolute left-5 top-10 h-8' />

@@ -15,34 +15,28 @@ import SideBarItems from './SideBarItems'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { User, UserBody } from '../typing'
 import { fetchUser } from '../utils/fetchuser'
+import { useTheme } from 'next-themes'
 
 function SideBar() {
+  const { theme , setTheme } = useTheme()
   const { data: session, status } = useSession()
-  const [ theme , setTheme ] =  useState<string>('light')
   const [ user , setUser ] = useState<User>({} as User)
   const [ isSignIn , setIsSignIn ] = useState<boolean>(false)
-  const [isNotDesktop, setNotDesktop] = useState<boolean>(globalThis.innerWidth <= 768);
+  const [isNotDesktop, setNotDesktop] = useState<boolean>(globalThis.innerWidth < 768);
 
   const updateMedia = () => {
-    setNotDesktop(() => globalThis.innerWidth <= 768);
+    setNotDesktop(() => globalThis.innerWidth < 768);
   };
-  console.log(isNotDesktop)
   useEffect(() => {
     window.addEventListener("resize", updateMedia);
     return () => globalThis.removeEventListener("resize", updateMedia);
   });
 
-  useEffect(() => {
-    localStorage.setItem('theme', theme)
-    const localTheme = localStorage.getItem('theme')
-    console.log(localTheme)
-  }, [theme])
-  
-
   const handleThemeChange = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light')
+    setTheme(theme === 'dark' ? 'light' : 'dark');
   }
   
+
   const handleSignin = async () => {
     await signIn()
     
@@ -72,7 +66,7 @@ function SideBar() {
   }, [status])
 
   return (
-    <div className='flex  md:col-span-2 md:justify-start md:w-fit md:bg-transparent md:relative md:items-start md:flex-col fixed bottom-0 z-50 w-full  items-center justify-evenly  bg-white border-t'>
+    <div className='flex  md:col-span-2 md:justify-start bg-white dark:bg-[#0D1117] md:bg-transparent md:w-fit md:dark:bg-transparent md:border-t-0 md:relative md:items-start md:flex-col fixed bottom-0 z-50 w-full  items-center justify-evenly  border-t'>
 
         <img src="https://links.papareact.com/drq" className='md:m-3 md:mt-3  md:h-10 md:w-10 md:block hidden' alt=""/>
         

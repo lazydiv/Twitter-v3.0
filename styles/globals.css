@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/*
+ * components styles
+ */
+
+@layer components {
+    * {
+        @apply border-gray-100 dark:border-gray-900
+    }
+    body {
+        @apply bg-blue-50/20 dark:bg-[#0D1117]
+    }
+}
+
