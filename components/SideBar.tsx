@@ -61,17 +61,17 @@ function SideBar() {
   }, [status])
   
   return (
-    <div className='flex col-span-1 md:col-span-2 flex-col items-center  '>
-        <img src="https://links.papareact.com/drq" className='m-3 mt-5 md:m-3 md:mt-3 h-7 md:h-10 md:w-10' alt=""/>
+    <div className='flex  md:col-span-2 md:justify-start md:w-fit md:bg-transparent md:relative md:items-start md:flex-col fixed bottom-0 z-50 w-full  items-center justify-evenly  bg-white border-t'>
+
+        <img src="https://links.papareact.com/drq" className='md:m-3 md:mt-3  md:h-10 md:w-10 md:block hidden' alt=""/>
         
         <SideBarItems Icon={HomeIcon} title="Home"/>
-        <SideBarItems Icon={HashtagIcon} title="Explore"/>
+        {window.innerWidth > 768 && <SideBarItems Icon={HashtagIcon} title="Explore"/>}
         <SideBarItems Icon={BellIcon} title="Notifications"/>
         <SideBarItems Icon={MailIcon} title="Messages"/>
-        <SideBarItems Icon={CollectionIcon} title="Lists"/>
-        <SideBarItems Icon={BookmarkIcon} title="Bookmarks"/>
+        {window.innerWidth > 768 && <SideBarItems Icon={CollectionIcon} title="Lists" />}
+        {window.innerWidth > 768 && <SideBarItems Icon={BookmarkIcon} title="Bookmarks" />}
         <SideBarItems onClick={session ? signOut : handleSignin} Icon={UserIcon} title={session ? 'Sign Out' : 'Sign In'}/>
-        <SideBarItems Icon={DotsCircleHorizontalIcon} title="more"/>
         <button onClick={handleThemeChange}>
             {
               theme === 'light' ? (
@@ -81,6 +81,8 @@ function SideBar() {
               )
             }
         </button>
+        <SideBarItems Icon={DotsCircleHorizontalIcon} title="more"/>
+
     </div>
   )
 }
