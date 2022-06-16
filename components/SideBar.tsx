@@ -16,7 +16,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { User, UserBody } from '../typing'
 import { fetchUser } from '../utils/fetchuser'
 
-function SideBar() {
+function SideBar(window: Window) {
   const { data: session, status } = useSession()
   const [ theme , setTheme ] =  useState<string>('light')
   const [ user , setUser ] = useState<User>({} as User)
